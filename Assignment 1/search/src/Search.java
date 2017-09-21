@@ -56,19 +56,33 @@ public class Search {
 	//Iterative deepening, tree-search and graph-search
 	public String IterativeDeepeningTreeSearch() {
 		//TODO
+		String result;
+		for (int i = 0; i < Double.POSITIVE_INFINITY; i++) {
+			result = TreeSearchDepthLimited(new FrontierLIFO(), i);
+			if (result != null) {
+				return result;
+			}
+		}
 		return null;
+		
 	}
 	
 	public String IterativeDeepeningGraphSearch() {
 		//TODO
-		return null;	
+		String result;
+		for (int i = 0; i < Double.POSITIVE_INFINITY; i++) {
+			result = GraphSearchDepthLimited(new FrontierLIFO(), i);
+			if (result != null) {
+				return result;
+			}
+		}
+		return null;
 	}
 	
 	//For statistics purposes
 	int cnt; //count expansions
 	List<Node> node_list; //store all nodes ever generated
 	Node initialNode; //initial node based on initial state
-	//
 	
 	private String TreeSearch(Frontier frontier) {
 		cnt = 0; 
@@ -122,12 +136,52 @@ public class Search {
 	
 	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
 		//TODO
-		return null;
+		cnt = 0; 
+		node_list = new ArrayList<Node>();
+		
+		initialNode = MakeNode(problem.initialState); 
+		node_list.add( initialNode );
+		
+		frontier.insert( initialNode );
+		while(true) {
+			if(frontier.isEmpty() || (cnt > limit))
+				return null;
+			
+			Node node = frontier.remove();
+			
+			if( problem.goal_test(node.state) )
+				return Solution(node);
+			
+			frontier.insertAll(Expand(node,problem));
+			cnt++;
+		}
 	}
 
 	private String GraphSearchDepthLimited(Frontier frontier, int limit) {
 		//TODO
-		return null;	
+		cnt = 0; 
+		node_list = new ArrayList<Node>();
+		
+		initialNode = MakeNode(problem.initialState); 
+		node_list.add( initialNode );
+		
+		Set<Object> explored = new HashSet<Object>(); //empty set
+		frontier.insert( initialNode );
+		while(true) {
+			if(frontier.isEmpty() || (cnt > limit))
+				return null;
+			
+			Node node = frontier.remove();
+			
+			if( problem.goal_test(node.state) )
+				return Solution(node);
+			
+			if( !explored.contains(node.state) ) {
+				explored.add(node.state);
+				frontier.insertAll(Expand(node,problem));
+				cnt++;
+			}
+		}	
 	}
 
 	private Node MakeNode(Object state) {
