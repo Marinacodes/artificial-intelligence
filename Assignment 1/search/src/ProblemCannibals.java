@@ -156,28 +156,22 @@ public class ProblemCannibals extends Problem {
 		
 		Search search  = new Search(problem);
 		
-		System.out.println("BreadthFirstTreeSearch:\t\t\t" + search.BreadthFirstTreeSearch());
-
-		System.out.println("BreadthFirstGraphSearch:\t\t" + search.BreadthFirstGraphSearch());
+		System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
+		System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
 		
-		System.out.println("DepthFirstTreeSearch:\t\t\t" + search.DepthFirstTreeSearch());
+		System.out.println("DepthFirstTreeSearch:\t\t" + search.DepthFirstTreeSearch());		
+		System.out.println("DepthFirstGraphSearch:\t\t" + search.DepthFirstGraphSearch());
 		
-		System.out.println("DepthFirstGraphSearch:\t\t\t" + search.DepthFirstGraphSearch());
+		System.out.println("UniformCostTreeSearch:\t\t" + search.UniformCostTreeSearch());		
+		System.out.println("UniformCostGraphSearch):\t" + search.UniformCostGraphSearch());
 		
-		System.out.println("UniformCostTreeSearch:\t\t\t" + search.UniformCostTreeSearch());
+		System.out.println("GreedyBestFirstTreeSearch:\t" + search.GreedyBestFirstTreeSearch());		
+		System.out.println("GreedyBestFirstGraphSearch:\t" + search.GreedyBestFirstGraphSearch());
 		
-		System.out.println("UniformCostGraphSearch):\t\t" + search.UniformCostGraphSearch());
+		System.out.println("AstarTreeSearch:\t\t" + search.AstarTreeSearch());		
+		System.out.println("AstarGraphSearch:\t\t" + search.AstarGraphSearch());
 		
-		System.out.println("GreedyBestFirstTreeSearch:\t\t" + search.GreedyBestFirstTreeSearch());
-		
-		System.out.println("GreedyBestFirstGraphSearch:\t\t" + search.GreedyBestFirstGraphSearch());
-		
-		System.out.println("AstarTreeSearch:\t\t\t\t" + search.AstarTreeSearch());
-		
-		System.out.println("AstarGraphSearch:\t\t\t\t" + search.AstarGraphSearch());
-		
-		System.out.println("IterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());
-		
+		System.out.println("IterativeDeepeningTreeSearch:\t" + search.IterativeDeepeningTreeSearch());		
 		System.out.println("IterativeDeepeningGraphSearch:\t" + search.IterativeDeepeningGraphSearch());
 	}
 }

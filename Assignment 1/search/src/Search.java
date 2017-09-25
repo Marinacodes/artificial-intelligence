@@ -144,15 +144,17 @@ public class Search {
 		
 		frontier.insert( initialNode );
 		while(true) {
-			if(frontier.isEmpty() || (cnt > limit))
+			if(frontier.isEmpty())
 				return null;
 			
 			Node node = frontier.remove();
 			
-			if( problem.goal_test(node.state) )
-				return Solution(node);
+			if (node.depth < limit) {
+				if( problem.goal_test(node.state) )
+					return Solution(node);
+				frontier.insertAll(Expand(node,problem));
+			}		
 			
-			frontier.insertAll(Expand(node,problem));
 			cnt++;
 		}
 	}
@@ -168,19 +170,20 @@ public class Search {
 		Set<Object> explored = new HashSet<Object>(); //empty set
 		frontier.insert( initialNode );
 		while(true) {
-			if(frontier.isEmpty() || (cnt > limit))
+			if(frontier.isEmpty())
 				return null;
 			
 			Node node = frontier.remove();
 			
-			if( problem.goal_test(node.state) )
-				return Solution(node);
-			
-			if( !explored.contains(node.state) ) {
-				explored.add(node.state);
-				frontier.insertAll(Expand(node,problem));
-				cnt++;
-			}
+			if (node.depth < limit) {
+				if( problem.goal_test(node.state) ) 
+					return Solution(node);
+				if( !explored.contains(node.state) ) {
+					explored.add(node.state);
+					frontier.insertAll(Expand(node,problem));
+					cnt++;
+				}
+			}			
 		}	
 	}
 
