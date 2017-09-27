@@ -8,7 +8,9 @@ import java.util.Set;
 public class Search {
 	Problem problem;
 	
-	public Search(Problem problem) { this.problem = problem; }
+	public Search(Problem problem) { 
+		this.problem = problem; 
+	}
 	
 	//Tree-search methods
 	public String BreadthFirstTreeSearch() {
@@ -51,11 +53,9 @@ public class Search {
 	public String AstarGraphSearch() {
 		return GraphSearch(new FrontierPriorityQueue(new ComparatorF(problem)));
 	}
-
 	
 	//Iterative deepening, tree-search and graph-search
 	public String IterativeDeepeningTreeSearch() {
-		//TODO
 		String result;
 		for (int i = 0; i < Double.POSITIVE_INFINITY; i++) {
 			result = TreeSearchDepthLimited(new FrontierLIFO(), i);
@@ -68,7 +68,6 @@ public class Search {
 	}
 	
 	public String IterativeDeepeningGraphSearch() {
-		//TODO
 		String result;
 		for (int i = 0; i < Double.POSITIVE_INFINITY; i++) {
 			result = GraphSearchDepthLimited(new FrontierLIFO(), i);
@@ -99,8 +98,9 @@ public class Search {
 			
 			Node node = frontier.remove();
 			
-			if( problem.goal_test(node.state) )
+			if( problem.goal_test(node.state) ) {
 				return Solution(node);
+			}
 			
 			frontier.insertAll(Expand(node,problem));
 			cnt++;
@@ -123,8 +123,9 @@ public class Search {
 			
 			Node node = frontier.remove();
 			
-			if( problem.goal_test(node.state) )
+			if( problem.goal_test(node.state) ) {
 				return Solution(node);
+			}
 			
 			if( !explored.contains(node.state) ) {
 				explored.add(node.state);
@@ -135,23 +136,30 @@ public class Search {
 	}
 	
 	private String TreeSearchDepthLimited(Frontier frontier, int limit) {
-		//TODO
 		cnt = 0; 
 		node_list = new ArrayList<Node>();
 		
+		// initialize the frontier using the initial state of problem
 		initialNode = MakeNode(problem.initialState); 
 		node_list.add( initialNode );
-		
 		frontier.insert( initialNode );
+		
 		while(true) {
+			// if the frontier is empty then return failure
 			if(frontier.isEmpty())
 				return null;
 			
+			// remove n from the frontier
 			Node node = frontier.remove();
 			
+			// if n contains a goal state then return the corresponding solution
+			if( problem.goal_test(node.state) ) {
+				return Solution(node);
+			}
+			
+			// if the depth of n is less than limit then
 			if (node.depth < limit) {
-				if( problem.goal_test(node.state) )
-					return Solution(node);
+				// expand n adding the resulting nodes to the frontier
 				frontier.insertAll(Expand(node,problem));
 			}		
 			
@@ -160,29 +168,36 @@ public class Search {
 	}
 
 	private String GraphSearchDepthLimited(Frontier frontier, int limit) {
-		//TODO
 		cnt = 0; 
 		node_list = new ArrayList<Node>();
 		
-		initialNode = MakeNode(problem.initialState); 
+		// initialize the frontier using the initial state of problem
+		initialNode = MakeNode(problem.initialState); 		
 		node_list.add( initialNode );
-		
+		// initialize the explored set to be empty
 		Set<Object> explored = new HashSet<Object>(); //empty set
 		frontier.insert( initialNode );
+		
 		while(true) {
+			// if the frontier is empty then return failure
 			if(frontier.isEmpty())
 				return null;
 			
+			// remove n from the frontier
 			Node node = frontier.remove();
 			
-			if (node.depth < limit) {
-				if( problem.goal_test(node.state) ) 
-					return Solution(node);
-				if( !explored.contains(node.state) ) {
-					explored.add(node.state);
-					frontier.insertAll(Expand(node,problem));
-					cnt++;
-				}
+			// if n contains a goal state then return the corresponding solution
+			if( problem.goal_test(node.state) ) {
+				return Solution(node);
+			}
+			
+			// if the state of n is not in explored and the depth of n is less than limit
+			if( !explored.contains(node.state) && node.depth < limit ) {
+				// add the state of n to explored
+				explored.add(node.state);
+				// expand n adding the resulting nodes to the frontier
+				frontier.insertAll(Expand(node,problem));
+				cnt++;
 			}			
 		}	
 	}
@@ -216,6 +231,26 @@ public class Search {
 		return successors;
 	}
 	
+	void printTree(Node node) {
+		
+		for (int i = 0; i <= node.depth; i++) {
+			System.out.print("\t");
+		}
+		
+		System.out.print(node.state);
+		System.out.print(" (g=" + (double)node.path_cost + ", h=" + (double)problem.h(node.state) + ", f=" + (double)(node.path_cost + problem.h(node.state)) + ")");
+		if (node.order != -1) {
+			System.out.print(" order=" + node.order);
+		}
+		System.out.println();
+		
+		for (Node m : node_list) {
+			if (m.parent_node == node) {
+				printTree(m);
+			}
+		}		
+	}
+	
 	//Create a string to print solution. 
 	private String Solution(Node node) {
 		
@@ -230,6 +265,8 @@ public class Search {
 		while(!solution.isEmpty())
 			solution_str += solution.pop() + " ";
 		
+		// Uncomment below line to print statistics for question # 2
+		// printTree(initialNode);
 		return solution_str;
 	}
 }

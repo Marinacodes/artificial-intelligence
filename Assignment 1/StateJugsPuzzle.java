@@ -1,14 +1,14 @@
-public class StateWaterJugs
+public class StateJugsPuzzle
 {    
     int jugsArray[];
     
-    public StateWaterJugs(int[] jugsArray) { 
+    public StateJugsPuzzle(int[] jugsArray) { 
 		this.jugsArray = jugsArray; 
 	}
     
     //It has to be a copy of values not reference because we will 
     //create many states and don't want to overwrite the same array.
-    public StateWaterJugs(StateWaterJugs state) {
+    public StateJugsPuzzle(StateJugsPuzzle state) {
     	jugsArray = new int[3];
         
 		for(int i = 0; i < 3; i++) {
@@ -17,7 +17,7 @@ public class StateWaterJugs
     }
     
     public boolean equals(Object o) {
-        StateWaterJugs state = (StateWaterJugs) o;
+        StateJugsPuzzle state = (StateJugsPuzzle) o;
         
         for(int i = 0; i < 3; i++) {
             if(this.jugsArray[i] != state.jugsArray[i]) {

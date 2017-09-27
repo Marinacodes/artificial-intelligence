@@ -72,11 +72,11 @@ public class ProblemMap extends Problem {
 	}
 
 	public static void main(String[] args) throws Exception {
-		ProblemMap problem = new ProblemMap("romania.txt","romaniaSLD.txt");
+		ProblemMap problem = new ProblemMap("romania.txt", "romaniaSLD.txt");
 		problem.initialState = "Timisoara";
 		problem.goalState = "Bucharest";
 		
-		Search search  = new Search(problem);
+		Search search = new Search(problem);
 		
 		System.out.println("BreadthFirstTreeSearch:\t\t" + search.BreadthFirstTreeSearch());
 		System.out.println("BreadthFirstGraphSearch:\t" + search.BreadthFirstGraphSearch());
