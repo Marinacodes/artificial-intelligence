@@ -54,7 +54,6 @@ public class Search {
 		return GraphSearch(new FrontierPriorityQueue(new ComparatorF(problem)));
 	}
 	
-	//Iterative deepening, tree-search and graph-search
 	public String IterativeDeepeningTreeSearch() {
 		String result;
 		for (int i = 0; i < Double.POSITIVE_INFINITY; i++) {
@@ -63,8 +62,7 @@ public class Search {
 				return result;
 			}
 		}
-		return null;
-		
+		return null;		
 	}
 	
 	public String IterativeDeepeningGraphSearch() {
@@ -146,8 +144,9 @@ public class Search {
 		
 		while(true) {
 			// if the frontier is empty then return failure
-			if(frontier.isEmpty())
+			if(frontier.isEmpty()) {
 				return null;
+			}
 			
 			// remove n from the frontier
 			Node node = frontier.remove();
@@ -180,8 +179,9 @@ public class Search {
 		
 		while(true) {
 			// if the frontier is empty then return failure
-			if(frontier.isEmpty())
+			if(frontier.isEmpty()) {
 				return null;
+			}
 			
 			// remove n from the frontier
 			Node node = frontier.remove();
