@@ -25,11 +25,11 @@ public class CSPZebraProblem extends CSP {
 			return true;
 		
 		// The Englishman lives in the red house
-		if(X.equals("Englishman") && Y.equals("red") && !x.equals(y))
-			return false;
+		if(X.equals("Englishman") && Y.equals("red") && !x.equals(y)) 
+			return false;		
 		
 		// The Spaniard owns a dog
-		if(X.equals("Spaniard") && Y.equals("dog") && !x.equals(y))
+		if(X.equals("Spaniard") && Y.equals("dog") && !x.equals(y)) 
 			return false;
 		
 		// The coffee is drunk in the green house
@@ -37,7 +37,7 @@ public class CSPZebraProblem extends CSP {
 			return false;
 		
 		// The Ukrainian drinks tea
-		if(X.equals("Ukrainian") && Y.equals("tea") && !x.equals(y))
+		if(X.equals("Ukrainian") && Y.equals("tea") && !x.equals(y)) 
 			return false;
 		
 		// The Old Gold smoker owns snails
@@ -49,25 +49,23 @@ public class CSPZebraProblem extends CSP {
 			return false;
 		
 		// The Lucky Strike smoker drinks orange juice
-		if(X.equals("Lucky Strike") && Y.equals("orange juice") && !x.equals(y))
+		if(X.equals("Lucky Strike") && Y.equals("orange juice") && !x.equals(y)) 
 			return false;
-		
+			
 		// The Japanese smokes Parliament
-		if(X.equals("Japanese") && Y.equals("Parliament") && !x.equals(y))
+		if(X.equals("Japanese") && Y.equals("Parliament") && !x.equals(y)) 
 			return false;		
 		
-		// The green house is directly to the right of the ivory house
+	 	// The green house is directly to the right of the ivory house
 		if(X.equals("green") && Y.equals("ivory") && (int)x != (int)y + 1)
 			return false;
 		
-		// The Chesterfield smoker lives next to the fox owner
-		if(X.equals("Chesterfield") && Y.equals("fox") && ((int)x != (int)y + 1 || (int)x != (int)y - 1 || (int)y != (int)x + 1 || (int)y != (int)x - 1))
-			return false;		
-		
 		// Kools are smoked in the house next to the house where the horse is kept
-		if(X.equals("Kools") && Y.equals("horse") && ((int)x != (int)y + 1 || (int)x != (int)y - 1 || (int)y != (int)x + 1 || (int)y != (int)x - 1))
+		// We know Kools are smoked in the yellow house, yellow house is first,
+		// Norwegian lives in the yellow house, and Norwegian lives next to the blue house
+		if(X.equals("blue") && Y.equals("horse") && !x.equals(y)) 
 			return false;
-			
+		
 		// Uniqueness constraints
 		if(varCol.contains(X) && varCol.contains(Y) && !X.equals(Y) && x.equals(y))
 			return false;
@@ -84,6 +82,15 @@ public class CSPZebraProblem extends CSP {
 		if(varCig.contains(X) && varCig.contains(Y) && !X.equals(Y) && x.equals(y))
 			return false;
 		
+		if(varBlu.contains(X) && varBlu.contains(Y) && !X.equals(Y) && x.equals(y))
+			return false;
+		
+		if(varMil.contains(X) && varMil.contains(Y) && !X.equals(Y) && x.equals(y))
+			return false;
+		
+		if(varNor.contains(X) && varNor.contains(Y) && !X.equals(Y) && x.equals(y))
+			return false;
+		
 		return true;
 	}
 		
@@ -97,10 +104,6 @@ public class CSPZebraProblem extends CSP {
 		Integer[] domwo1 = {2, 3, 4, 5};
 		Integer[] dom2 = {2};
 		Integer[] domwo2 = {1, 3, 4, 5};		
-		
-		// Add domains
-		for(Object X : varCol) 
-			csp.addDomain(X, dom);
 		
 		// Unary constraint: milk is drunk in the middle house
 		for(Object X : varDri)
@@ -150,6 +153,18 @@ public class CSPZebraProblem extends CSP {
 			for(Object Y : varCig)
 				csp.addBidirectionalArc(X,Y);
 			
+		for(Object X : varBlu)
+			for(Object Y : varBlu)
+				csp.addBidirectionalArc(X,Y);
+			
+		for(Object X : varMil)
+			for(Object Y : varMil)
+				csp.addBidirectionalArc(X,Y);
+			
+		for(Object X : varNor)
+			for(Object Y : varNor)
+				csp.addBidirectionalArc(X,Y);
+			
 		// Binary constraints: add constraint arcs	
 		csp.addBidirectionalArc("Englishman", "red");
 		csp.addBidirectionalArc("Spaniard", "dog");
@@ -160,6 +175,7 @@ public class CSPZebraProblem extends CSP {
 		csp.addBidirectionalArc("Old Gold", "snails");		
 		csp.addBidirectionalArc("Lucky Strike", "orange juice");
 		csp.addBidirectionalArc("Japanese", "Parliament");		
+		csp.addBidirectionalArc("blue", "horse");		
 		
 		Search search = new Search(csp);
 		System.out.println(search.BacktrackingSearch());
