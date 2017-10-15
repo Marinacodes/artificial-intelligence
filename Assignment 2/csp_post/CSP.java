@@ -25,6 +25,7 @@ public abstract class CSP {
 		for(Object v : values)
 			s.add(v);
 		D.put(X, s);
+		//System.out.println(D.toString());
 	}
 	
 	public abstract boolean isGood(Object X, Object Y, Object x, Object y);
